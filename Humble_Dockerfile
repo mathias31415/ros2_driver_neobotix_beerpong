@@ -1,0 +1,95 @@
+##############################################################################
+##                           1. stage: Base Image                           ##
+##############################################################################
+ARG ROS_DISTRO=humble
+FROM osrf/ros:$ROS_DISTRO-desktop as base
+
+# Configure DDS
+COPY dds_profile.xml /opt/misc/dds_profile.xml
+ENV FASTRTPS_DEFAULT_PROFILES_FILE=/opt/misc/dds_profile.xml
+
+# Create user with root privilege
+ARG USER=ur5-robot
+ARG UID=1000
+ARG GID=1000
+ENV USER=$USER
+RUN groupadd -g $GID $USER \
+    && useradd -m -u $UID -g $GID --shell $(which bash) $USER 
+
+#install some standard packages
+USER root
+RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-xacro
+RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-joint-state-publisher-gui
+RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-ur
+RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-realsense2-description
+USER ${USER}
+
+#install packages for moveit
+USER root
+RUN DEBIAN_FRONTEND=noninteractive \
+	apt update && apt install -y  \
+    ros-$ROS_DISTRO-moveit  \
+    ros-$ROS_DISTRO-moveit-common  \
+    ros-$ROS_DISTRO-moveit-servo  \
+    ros-$ROS_DISTRO-xacro  \
+    ros-$ROS_DISTRO-joint-trajectory-controller  \
+    ros-$ROS_DISTRO-joint-state-broadcaster  \
+    ros-$ROS_DISTRO-controller-manager \
+    ros-$ROS_DISTRO-sensor-msgs-py  \
+    ros-$ROS_DISTRO-joy*  \
+    ros-$ROS_DISTRO-rqt-controller-manager
+USER $USER
+
+# Setup workpace
+USER $USER
+RUN mkdir -p /home/$USER/ros2_ws/src
+WORKDIR /home/$USER/ros2_ws
+
+
+##############################################################################
+##              2. stage: copy the wrapper and application                  ##
+##############################################################################
+#install dependencies for python interface
+USER root
+RUN apt-get update && apt-get install -y pip
+USER $USER
+
+RUN pip install scipy
+
+# copy dependencies folder from local machine --> maybe move to application package or clone from github?
+RUN mkdir -p /home/$USER/ws_dependencies
+COPY ./ws_dependencies /home/$USER/ws_dependencies
+
+USER root
+RUN chown -R "$USER":"$USER" /home/"$USER"/ws_dependencies/py_dependencies
+USER $USER
+
+RUN cd /home/"$USER"/ws_dependencies/py_dependencies/manipulation_tasks && pip install .
+
+# Build the dependencies package (wrapper)
+RUN cd /home/$USER/ws_dependencies && \
+    . /opt/ros/$ROS_DISTRO/setup.sh && \
+    colcon build
+
+# Add built package to entrypoint by calling install/setup.bash
+USER root
+RUN sed -i 's|exec "\$@"|source "/home/'"${USER}"'/ws_dependencies/install/setup.bash"\n&|' /ros_entrypoint.sh
+USER $USER
+
+# Build the workspace package (application)
+RUN cd /home/$USER/ros2_ws && \
+    . /opt/ros/$ROS_DISTRO/setup.sh && \
+    colcon build
+
+# Add built package to entrypoint by calling install/setup.bash
+USER root
+RUN sed -i 's|exec "\$@"|source "/home/'"${USER}"'/ros2_ws/install/setup.bash"\n&|' /ros_entrypoint.sh
+USER $USER
+
+
+# autostart bringup with rviz
+CMD ["ros2", "launch", "moveit_wrapper", "bringup.launch.py", "launch_rviz:=true"]
+
+
+
+
