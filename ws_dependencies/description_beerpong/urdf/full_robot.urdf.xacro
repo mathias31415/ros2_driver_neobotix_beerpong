@@ -163,7 +163,7 @@
 
     <!--Cup dispenser--> 
     <joint name="neobotix_to_cup_dispenser" type="fixed">
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="-0.11 0.256 1.434" rpy="3.1415 0 3.1415" />
         <parent link="base_neobotix_link"/>
         <child link="cup_dispenser_link"/>
     </joint> 
