@@ -160,5 +160,30 @@
       </collision>
     </link>
 
+
+    <!--Cup dispenser--> 
+    <joint name="neobotix_to_cup_dispenser" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="base_neobotix_link"/>
+        <child link="cup_dispenser_link"/>
+    </joint> 
+
+    <link name="cup_dispenser_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://description_beerpong/meshes/visual/becherspender.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://description_beerpong/meshes/collision/becherspender.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="$(arg tf_prefix)red" />
+      </collision>
+    </link>
+
  
 </robot>
