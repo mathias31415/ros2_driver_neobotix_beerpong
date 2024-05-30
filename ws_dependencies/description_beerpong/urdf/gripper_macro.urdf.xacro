@@ -49,7 +49,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://description_beerpong/meshes/visual/greifer_beerpong_baugruppe.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://description_beerpong/meshes/visual/greifer_beerpong_baugruppe_aussen_greifen.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="${tf_prefix}grey" />
       </visual>
@@ -57,7 +57,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://description_beerpong/meshes/collision/greifer_beerpong_baugruppe.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://description_beerpong/meshes/collision/greifer_beerpong_baugruppe_aussen_greifen.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="${tf_prefix}red" />
       </collision>
