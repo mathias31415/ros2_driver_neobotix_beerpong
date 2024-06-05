@@ -134,7 +134,7 @@
 
     <!--Neobotix Macro importieren -->
     <xacro:include filename="$(find neo_mpo_500-2)/robot_model/mpo_500_macro.urdf.xacro"/>
-    <xacro:neobotix parent="world" origin_xyz="0 -0.205 -0.805" origin_rpy="0 0 1.57075"/>
+    <xacro:neobotix parent="base_link" origin_xyz="0 -0.205 -0.805" origin_rpy="0 0 1.57075"/>
 
     <!--Neobotix cabin--> 
     <joint name="neobotix_to_cabin" type="fixed">
