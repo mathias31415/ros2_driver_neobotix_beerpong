@@ -18,9 +18,8 @@ def main(args=None):
 
     # initialize robot client node
     # if not connected to the real robot set is_simulation=True
-    robot = RobotClient(is_simulation=True)
-    # home joint positions of the robot in Jointroom (Winkel in Rad default)
-    current_pose = robot.node.get_transform('grip_tcp_link', 'world')
+    robot = RobotClient()   # home joint positions of the robot in Jointroom (Winkel in Rad default)
+    current_pose = robot.node.get_transform('tcp_link', 'world')
     print(current_pose)
 
 
