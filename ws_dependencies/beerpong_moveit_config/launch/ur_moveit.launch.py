@@ -165,6 +165,10 @@ def launch_setup(context, *args, **kwargs):
     ompl_planning_yaml = load_yaml("beerpong_moveit_config", "config/ompl_planning.yaml")
     ompl_planning_pipeline_config["move_group"].update(ompl_planning_yaml)
 
+    # stomp_planning_yaml = load_yaml("beerpong_moveit_config", "config/stomp_planning.yaml")
+    # ompl_planning_pipeline_config["move_group"].update(stomp_planning_yaml)
+
+
     # Trajectory Execution Configuration
     controllers_yaml = load_yaml("beerpong_moveit_config", "config/controllers.yaml")
     # the scaled_joint_trajectory_controller does not work on fake hardware
@@ -215,6 +219,8 @@ def launch_setup(context, *args, **kwargs):
             warehouse_ros_config,
         ],
     )
+
+    print(ompl_planning_yaml)
 
     # rviz with moveit configuration
     rviz_config_file = PathJoinSubstitution(
