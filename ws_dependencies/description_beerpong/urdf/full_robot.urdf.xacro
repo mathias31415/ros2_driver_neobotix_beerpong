@@ -12,7 +12,7 @@
    <xacro:arg name="ur_type" default="ur5x"/>
 
    <!-- parameters -->
-   <xacro:arg name="tf_prefix" default="" />
+   <xacro:arg name="prefix" default="ur_" />
    <xacro:arg name="joint_limit_params" default="$(find ur_description)/config/$(arg ur_type)/joint_limits.yaml"/>
    <xacro:arg name="kinematics_params" default="$(find ur_description)/config/$(arg ur_type)/default_kinematics.yaml"/>
    <xacro:arg name="physical_params" default="$(find ur_description)/config/$(arg ur_type)/physical_parameters.yaml"/>
@@ -59,10 +59,10 @@
    <!-- create link fixed to the "world" -->
    <link name="world" />
 
-     <!-- arm, ur base_link = world, neobotix under world z = 0 (only for collision avioidance)      parent="base_neobotix_link"-->
+     <!-- arm, ur base_link = world, neobotix under world z = 0 (only for collision avioidance)      parent="base_link"-->
    <xacro:ur_robot
      name="$(arg name)"
-     tf_prefix="$(arg tf_prefix)"
+     tf_prefix="$(arg prefix)"
      parent="world"
      joint_limits_parameters_file="$(arg joint_limit_params)"
      kinematics_parameters_file="$(arg kinematics_params)"
@@ -119,7 +119,7 @@
     <gazebo>
       <plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin">
         <parameters>$(arg simulation_controllers)</parameters>
-        <controller_manager_node_name>$(arg tf_prefix)controller_manager</controller_manager_node_name>
+        <controller_manager_node_name>$(arg prefix)controller_manager</controller_manager_node_name>
       </plugin>
     </gazebo>
   </xacro:if>
@@ -128,7 +128,7 @@
 
     <!--Greifer + Kamerahalter + Kamera Macro importieren -->
     <xacro:include filename="$(find description_beerpong)/urdf/gripper_macro.urdf.xacro"/>
-    <xacro:gripper_camera tf_prefix="$(arg tf_prefix)" parent="tool0" origin_xyz="0 0 0" origin_rpy="0 0 3.1415"/>
+    <xacro:gripper_camera prefix="$(arg prefix)" parent="tool0" origin_xyz="0 0 0" origin_rpy="0 0 3.1415"/>
 
 
 
@@ -139,7 +139,7 @@
     <!--Neobotix cabin--> 
     <joint name="neobotix_to_cabin" type="fixed">
         <origin xyz="0.072 0 0.386" rpy="0 0 -1.57075" />
-        <parent link="base_neobotix_link"/>
+        <parent link="base_link"/>
         <child link="cabin_link"/>
     </joint> 
 
@@ -156,7 +156,7 @@
         <geometry>
           <mesh filename="package://description_beerpong/meshes/collision/cabin.dae" scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="$(arg tf_prefix)red" />
+        <material name="$(arg prefix)red" />
       </collision>
     </link>
 
@@ -164,7 +164,7 @@
     <!--Cup dispenser--> 
     <joint name="neobotix_to_cup_dispenser" type="fixed">
         <origin xyz="-0.115 0.256 1.433" rpy="3.1415 0 3.1415" />
-        <parent link="base_neobotix_link"/>
+        <parent link="base_link"/>
         <child link="cup_dispenser_link"/>
     </joint> 
 
@@ -174,7 +174,7 @@
         <geometry>
           <mesh filename="package://description_beerpong/meshes/visual/becherspender.stl" scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="$(arg tf_prefix)grey" />
+        <material name="$(arg prefix)grey" />
       </visual>
     
       <collision>
@@ -182,7 +182,7 @@
         <geometry>
           <mesh filename="package://description_beerpong/meshes/collision/becherspender.stl" scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="$(arg tf_prefix)red" />
+        <material name="$(arg prefix)red" />
       </collision>
     </link>
 

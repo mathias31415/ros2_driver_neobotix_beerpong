@@ -89,7 +89,7 @@ def lin_test(robot):
 
     joint_pose = [-1.5707686583148401,-1.6702807585345667,-1.6521590391742151,4.893458843231201,1.5707252025604248,0.0001917476038215682]
 
-    current_pose = robot.node.get_transform('tcp_link', 'world')
+    current_pose = robot.node.get_transform('ur_tcp_link', 'world')
     print("tcp pose in world coordinate frame" , current_pose)
     movement_tcp = Affine((0.0, 0.6 ,-0.2))
     target_pose = current_pose * movement_tcp

@@ -7,24 +7,24 @@
 
 
 <!--build the gripper links and joints using a macro, which will be called in the diy_gripper_model.urdf.xacro while launching-->
-  <xacro:macro name="gripper_camera" params="tf_prefix parent origin_xyz origin_rpy"> 
-    <xacro:materials tf_prefix="${tf_prefix}"/>
+  <xacro:macro name="gripper_camera" params="prefix parent origin_xyz origin_rpy"> 
+    <xacro:materials prefix="${prefix}"/>
     
-    <joint name="${tf_prefix}gripper_to_parent" type="fixed">
+    <joint name="${prefix}gripper_to_parent" type="fixed">
         <parent link="${parent}"/>
-        <child link="${tf_prefix}camera_mount_link"/>
+        <child link="${prefix}camera_mount_link"/>
         <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
     </joint>
 
 
 <!-- Camera Mount-->    
-    <link name="${tf_prefix}camera_mount_link">
+    <link name="${prefix}camera_mount_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://description_beerpong/meshes/visual/Kamera_Mount.stl" scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="${tf_prefix}grey" />
+        <material name="${prefix}grey" />
       </visual>
     
       <collision>
@@ -32,26 +32,26 @@
         <geometry>
           <mesh filename="package://description_beerpong/meshes/collision/Kamera_Mount.stl" scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="${tf_prefix}red" />
+        <material name="${prefix}red" />
       </collision>
     </link>
 
 <!-- Gripper + Finger + Adapter-Plate-->   
-    <joint name="${tf_prefix}gripper_joint" type="fixed">
+    <joint name="${prefix}gripper_joint" type="fixed">
     <!-- Position zueinander wird in den joints angepasst (nicht in links)-->   
       <origin xyz="0 0 0.0245" rpy="1.57075 0 3.1415" />
-      <parent link="${tf_prefix}camera_mount_link" />
-      <child link="${tf_prefix}gripper_link" />
+      <parent link="${prefix}camera_mount_link" />
+      <child link="${prefix}gripper_link" />
       <axis xyz="0 0 1" />
     </joint>
 
-    <link name="${tf_prefix}gripper_link">
+    <link name="${prefix}gripper_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://description_beerpong/meshes/visual/greifer_beerpong_baugruppe_aussen_greifen.stl" scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="${tf_prefix}grey" />
+        <material name="${prefix}grey" />
       </visual>
 
       <collision>
@@ -59,15 +59,15 @@
         <geometry>
           <mesh filename="package://description_beerpong/meshes/collision/greifer_beerpong_baugruppe_aussen_greifen.stl" scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="${tf_prefix}red" />
+        <material name="${prefix}red" />
       </collision>
     </link>
 
 <!-- Realsense-Camera -->   
-    <joint name="${tf_prefix}camera_joint" type="fixed">
+    <joint name="${prefix}camera_joint" type="fixed">
       <origin xyz="0 0.098 0.074" rpy="0 0 3.1415" />
-      <parent link="${tf_prefix}camera_mount_link" />
-      <child link="${tf_prefix}camera_link" />
+      <parent link="${prefix}camera_mount_link" />
+      <child link="${prefix}camera_link" />
       <axis xyz="0 0 1" />
     </joint>
 
@@ -80,49 +80,49 @@
       <origin xyz="0 0.098 0.074" rpy="0 0 0"/>
     </xacro:sensor_d415> -->
 
-    <link name="${tf_prefix}camera_link">
+    <link name="${prefix}camera_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://description_beerpong/meshes/visual/realsense415.stl" scale="1 1 1"/>
         </geometry>
-        <material name="${tf_prefix}grey" />
+        <material name="${prefix}grey" />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://description_beerpong/meshes/collision/realsense415.stl" scale="1 1 1"/>
         </geometry>
-        <material name="${tf_prefix}red" />
+        <material name="${prefix}red" />
       </collision> 
     </link> 
 
-    <!-- <link name="${tf_prefix}camera_link">
+    <!-- <link name="${prefix}camera_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://description_beerpong/meshes/visual/realsense415.stl" scale="1 1 1"/>
         </geometry>
-        <material name="${tf_prefix}grey" />
+        <material name="${prefix}grey" />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://description_beerpong/meshes/collision/realsense415.stl"  scale="1 1 1"/>
         </geometry>
-        <material name="${tf_prefix}red" />
+        <material name="${prefix}red" />
       </collision>
     </link> -->
 
 
     <!--add a TCP Link for convenience, show TCP reference set in rviz-->
-    <joint name="${tf_prefix}tcp_joint" type="fixed"> 
+    <joint name="${prefix}tcp_joint" type="fixed"> 
         <origin xyz="0 0.112 0" rpy="1.57075 0 3.1415"/>
-        <parent link="${tf_prefix}gripper_link"/>
-        <child link="${tf_prefix}tcp_link"/>    
+        <parent link="${prefix}gripper_link"/>
+        <child link="${prefix}tcp_link"/>    
     </joint>
 
-    <link name="${tf_prefix}tcp_link"/>
+    <link name="${prefix}tcp_link"/>
 
   </xacro:macro>
 

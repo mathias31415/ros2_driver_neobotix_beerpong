@@ -6,41 +6,41 @@ https://github.com/ros-simulation/gazebo_ros_demos/blob/kinetic-devel/rrbot_desc
 
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
 
-  <xacro:macro name="materials" params="tf_prefix">
+  <xacro:macro name="materials" params="prefix">
 
-    <material name="${tf_prefix}black">
+    <material name="${prefix}black">
       <color rgba="0.0 0.0 0.0 1.0"/>
     </material>
 
-    <material name="${tf_prefix}blue">
+    <material name="${prefix}blue">
       <color rgba="0.0 0.0 0.8 1.0"/>
     </material>
 
-    <material name="${tf_prefix}green">
+    <material name="${prefix}green">
       <color rgba="0.0 0.8 0.0 1.0"/>
     </material>
 
-    <material name="${tf_prefix}yellow">
+    <material name="${prefix}yellow">
       <color rgba="1.0 1.0 0.0 1.0"/>
     </material>
 
-    <material name="${tf_prefix}grey">
+    <material name="${prefix}grey">
       <color rgba="0.6 0.6 0.6 1.0"/>
     </material>
 
-    <material name="${tf_prefix}orange">
+    <material name="${prefix}orange">
       <color rgba="${255/255} ${108/255} ${10/255} 1.0"/>
     </material>
 
-    <material name="${tf_prefix}brown">
+    <material name="${prefix}brown">
       <color rgba="${222/255} ${207/255} ${195/255} 1.0"/>
     </material>
 
-    <material name="${tf_prefix}red">
+    <material name="${prefix}red">
       <color rgba="0.8 0.0 0.0 1.0"/>
     </material>
 
-    <material name="${tf_prefix}white">
+    <material name="${prefix}white">
       <color rgba="1.0 1.0 1.0 1.0"/>
     </material>
 
