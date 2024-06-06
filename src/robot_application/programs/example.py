@@ -74,6 +74,32 @@ def movement_test(robot):
     robot.setVelocity(0.1)
     robot.home()
 
+def lin_test(robot):
+    robot.setVelocity(0.1)
+    print("set velocity  to 0.1")
+
+    robot.home_position = [-np.pi/2, -np.pi/6, -np.pi/2, 7*np.pi/6, np.pi/2, 0.0]
+    print("set home position successfully")
+
+    # move robot to home position
+    robot.home()
+    print("move to home position" , robot.home_position)
+
+    time.sleep(5)
+
+    current_pose = robot.node.get_transform('tcp_link', 'world')
+    print("tcp pose in world coordinate frame" , current_pose)
+    movement_tcp = Affine((0.0, 0.4 ,0.0))
+    target_pose = current_pose * movement_tcp
+
+    print("move to test pose" , target_pose)
+    robot.setVelocity(0.1)
+    robot.lin(target_pose) 
+
+
+
+
+
 
 def test_gripper (robot):
     robot.move_gripper(0.0)   #open
@@ -100,7 +126,8 @@ def main(args=None):
     # robot.home_position = [-np.pi/2, -np.pi/6,-np.pi/2, 7*np.pi/6, np.pi/2, 0.0]
     # robot.home()
 
-    movement_test(robot)
+    #movement_test(robot)
+    lin_test(robot)
 
     #test_gripper(robot)
 
