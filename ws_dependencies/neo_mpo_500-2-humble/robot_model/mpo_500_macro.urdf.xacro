@@ -6,17 +6,17 @@
       
       <joint name="neobotix_to_parent" type="fixed">
           <parent link="${parent}"/>
-          <child link="base_neobotix_link"/>
+          <child link="base_link"/>
           <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
       </joint>
 
       <!-- Base Macro-->
-      <link name="base_neobotix_link"/>
+      <link name="base_link"/>
       <joint name="base_footprint_joint" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="0 0 -1"/>
         <joint_properties damping="1" friction="1"/>
-        <parent link="base_neobotix_link"/>
+        <parent link="base_link"/>
         <child link="base_footprint"/>
       </joint>
       <!-- Link -->
@@ -155,7 +155,7 @@
       <joint name="lidar_1_joint" type="fixed">
         <axis xyz="0 1 0"/>
         <origin rpy="0 0 0" xyz="0.442 0 0.372"/>
-        <parent link="base_neobotix_link"/>
+        <parent link="base_link"/>
         <child link="lidar_1_link"/>
       </joint>
       <link name="lidar_1_link" type="laser">
@@ -180,7 +180,7 @@
       <joint name="lidar_2_joint" type="fixed">
         <axis xyz="0 1 0"/>
         <origin rpy="0 0 3.14" xyz="-0.442 0 0.372"/>
-        <parent link="base_neobotix_link"/>
+        <parent link="base_link"/>
         <child link="lidar_2_link"/>
       </joint>
       <link name="lidar_2_link" type="laser">
