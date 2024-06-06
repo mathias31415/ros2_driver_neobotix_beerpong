@@ -52,7 +52,7 @@ def generate_launch_description():
     description_file = LaunchConfiguration("description_file")
     moveit_config_package = LaunchConfiguration("moveit_config_package")
     moveit_config_file = LaunchConfiguration("moveit_config_file")
-    prefix = LaunchConfiguration("prefix")
+    tf_prefix = LaunchConfiguration("tf_prefix")
     robot_ip = LaunchConfiguration("robot_ip")
 
     launch_rviz = LaunchConfiguration("launch_rviz")
@@ -103,9 +103,9 @@ def generate_launch_description():
     )
     declared_arguments.append(
         DeclareLaunchArgument(
-            "prefix",
+            "tf_prefix",
             default_value='""',
-            description="Prefix of the joint names, useful for "
+            description="tf_prefix of the joint names, useful for "
             "multi-robot setup. If changed than also joint names in the controllers' configuration "
             "have to be updated.",
         )
@@ -143,8 +143,8 @@ def generate_launch_description():
             " ",
             "output_recipe_filename:=rtde_output_recipe.txt",
             " ",
-            "prefix:=",
-            prefix,
+            "tf_prefix:=",
+            tf_prefix,
             " ",
         ]
     )
@@ -164,8 +164,8 @@ def generate_launch_description():
             # configs has to be updated!
             "ur",
             " ",
-            "prefix:=",
-            prefix,
+            "tf_prefix:=",
+            tf_prefix,
             " ",
         ]
     )
@@ -203,7 +203,7 @@ def generate_launch_description():
                 "description_file": description_file,
                 "moveit_config_package": moveit_config_package,
                 "moveit_config_file": moveit_config_file,
-                "prefix": prefix,
+                "tf_prefix": tf_prefix,
                 "launch_rviz": launch_rviz,
                 "robot_ip": robot_ip,
             }.items(),

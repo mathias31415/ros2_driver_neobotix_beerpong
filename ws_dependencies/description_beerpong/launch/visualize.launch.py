@@ -11,13 +11,13 @@ def generate_launch_description():
     declared_arguments = []
     declared_arguments.append(
         DeclareLaunchArgument(
-            "tf_prefix",
+            "tf_tf_prefix",
             default_value='""',
-            description="Prefix for the links and joints in the robot cell",
+            description="tf_prefix for the links and joints in the robot cell",
         )
     )
 
-    tf_prefix = LaunchConfiguration("tf_prefix")
+    tf_tf_prefix = LaunchConfiguration("tf_tf_prefix")
 
     robot_description_content = Command(    # enthält ganze Kinematik des Roboters
         [
@@ -25,8 +25,8 @@ def generate_launch_description():
             " ",
             PathJoinSubstitution([FindPackageShare(description_package), "urdf", "full_robot.urdf.xacro"]),
             " ",
-            "tf_prefix:=",
-            tf_prefix,
+            "tf_tf_prefix:=",
+            tf_tf_prefix,
         ]
     )
     robot_description = {"robot_description": robot_description_content}
