@@ -74,7 +74,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_package",
-            default_value="description_beerpong",
+            default_value="ur_description",
             description="Description package with robot URDF/XACRO files. Usually the argument "
             "is not set, it enables use of a custom description.",
         )
@@ -113,7 +113,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "robot_ip",
-            default_value='192.168.1.103',
+            default_value='"192.168.1.103"',
             description=" LAN IP of the robot"
 ,
         )
@@ -130,6 +130,7 @@ def generate_launch_description():
             " ",
             "robot_ip:=",
             robot_ip,
+            " ",
             "name:=",
             "ur",
             " ",
