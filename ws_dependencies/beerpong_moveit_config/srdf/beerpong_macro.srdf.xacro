@@ -74,7 +74,7 @@
     <!--disable gripper and camera collisions-->
     <disable_collisions link1="${tf_prefix}wrist_3_link" link2="${tf_prefix}camera_mount_link" reason="Adjacent" />
     <disable_collisions link1="${tf_prefix}camera_mount_link" link2="${tf_prefix}gripper_link" reason="Adjacent" />
-    <disable_collisions link1="${tf_prefix}camera_mount_link" link2="${tf_prefix}camera_link" reason="Never" />
+    <disable_collisions link1="${tf_prefix}camera_mount_link" link2="camera_link" reason="Never" />
 
     <!--disable cabin and cup_dispeser collisions-->
     <disable_collisions link1="cabin_link" link2="cup_dispenser_link" reason="Adjacent" />
