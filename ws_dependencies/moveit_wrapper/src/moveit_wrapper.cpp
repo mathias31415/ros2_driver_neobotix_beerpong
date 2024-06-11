@@ -115,8 +115,7 @@ namespace moveit_wrapper
                 current_plan_.planning_time_ = (rclcpp::Clock().now() - start).seconds();
 
                 if(success_timeparam) {
-                     _move_group->execute(current_plan_);
-                     success = true;
+                     success = (_move_group->execute(current_plan_)== moveit::core::MoveItErrorCode::SUCCESS);
                  }
 
                 response->success = success;
@@ -129,17 +128,31 @@ namespace moveit_wrapper
     void MoveitWrapper::move_to_pose_ptp(const std::shared_ptr<moveit_wrapper::srv::MoveToPose::Request> request,
                 std::shared_ptr<moveit_wrapper::srv::MoveToPose::Response> response)
     {
+        bool planning_success = false;
         bool success = false;
+
         if(_i_move_group_initialized)
         {
             _move_group->stop();
             _move_group->clearPoseTargets();
 
             _move_group->setPoseTarget(request->pose);
-            moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-            success = (_move_group->plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
-            if(success) {
-                _move_group->move();
+            
+            for (int i = 0; i < 3; i++)
+            {
+                moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+                planning_success = (_move_group->plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
+                RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "CartesianPTP planning %s", planning_success ? "SUCCEEDED" : "FAILED");
+                if(planning_success) {
+                    break;
+                }
+            }
+
+            if(planning_success) {
+                success = (_move_group->move() == moveit::core::MoveItErrorCode::SUCCESS);
+            }
+            else {
+                RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "CartesianPTP planning failed after 3 attempts.");
             }
         }
         response->success = success;
@@ -166,15 +179,29 @@ namespace moveit_wrapper
     bool MoveitWrapper::ptp_joint(const std::vector<double> joint_position)
     {
         bool success = false;
+        bool planning_success = false;
+
         if(_i_move_group_initialized)
         {
             _move_group->stop();
             _move_group->clearPoseTargets();
             _move_group->setJointValueTarget(joint_position);
-            moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-            success = (_move_group->plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
-            if(success) {
-                _move_group->move();
+
+            for (int i = 0; i < 3; i++)
+            {
+                moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+                planning_success = (_move_group->plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
+                RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "JointPTP planning %s", planning_success ? "SUCCEEDED" : "FAILED");
+                if(planning_success) {
+                    break;
+                }
+            }
+
+            if(planning_success) {
+                success = (_move_group->move() == moveit::core::MoveItErrorCode::SUCCESS);
+            }
+            else {
+                RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "JointPTP planning failed after 3 attempts.");
             }
         }
         return success;
