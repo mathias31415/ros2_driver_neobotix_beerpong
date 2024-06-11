@@ -83,6 +83,7 @@ namespace moveit_wrapper
         {   
             _move_group->stop();
             _move_group->clearPoseTargets();
+            _move_group->setStartStateToCurrentState();
 
             //https://github.com/moveit/moveit2/blob/main/moveit_ros/visualization/motion_planning_rviz_plugin/src/motion_planning_frame_planning.cpp
 
@@ -135,6 +136,8 @@ namespace moveit_wrapper
         {
             _move_group->stop();
             _move_group->clearPoseTargets();
+            _move_group->setStartStateToCurrentState();
+
 
             _move_group->setPoseTarget(request->pose);
             
@@ -168,6 +171,7 @@ namespace moveit_wrapper
         {
             _move_group->stop();
             _move_group->clearPoseTargets();
+            _move_group->setStartStateToCurrentState();
 
             success = ptp_joint(request->joint_position);
         }
@@ -185,6 +189,8 @@ namespace moveit_wrapper
         {
             _move_group->stop();
             _move_group->clearPoseTargets();
+            _move_group->setStartStateToCurrentState();
+
             _move_group->setJointValueTarget(joint_position);
 
             for (int i = 0; i < 3; i++)
