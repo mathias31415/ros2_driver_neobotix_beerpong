@@ -122,7 +122,7 @@ namespace moveit_wrapper
                 response->success = success;
             }
         }
-        RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "move_to_pose_lin callback executed.");
+        RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "move_to_pose_lin callback executed with %s", success ? "SUCCEEDED" : "FAILED");
     }
 
 
@@ -159,7 +159,7 @@ namespace moveit_wrapper
             }
         }
         response->success = success;
-        RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "move_to_pose_ptp callback executed.");
+        RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "move_to_pose_ptp callback executed with %s", success ? "SUCCEEDED" : "FAILED");
     }
 
 
@@ -176,7 +176,7 @@ namespace moveit_wrapper
             success = ptp_joint(request->joint_position);
         }
         response->success = success;
-        RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "move_to_joint_position callback executed.");
+        RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "move_to_joint_position callback executed with %s", success ? "SUCCEEDED" : "FAILED");
     }
 
 
