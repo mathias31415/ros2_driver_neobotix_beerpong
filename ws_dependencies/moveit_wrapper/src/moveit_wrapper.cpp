@@ -69,7 +69,10 @@ namespace moveit_wrapper
         RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), _planning_group.c_str());
         _move_group->stop();
         _move_group->clearPoseTargets();
-        init_move_group();
+
+        // set goal planning time
+        init_move_group
+        _move_group->setPlanningTime(2.0);
         response->success = true;
         RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "reset_planning_group callback executed.");
     }
