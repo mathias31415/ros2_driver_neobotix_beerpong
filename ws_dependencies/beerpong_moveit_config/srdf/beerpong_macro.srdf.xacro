@@ -80,8 +80,10 @@
     <disable_collisions link1="cabin_link" link2="cup_dispenser_link" reason="Adjacent" />
    
 
-
-
+    <!--disable collisions with collision plane-->
+    <disable_collisions link1="cabin_link" link2="collision_plane_link" reason="Adjacent" />
+    <disable_collisions link1="${tf_prefix}base_link" link2="collision_plane_link" reason="Adjacent" />
+    <disable_collisions link1="cup_dispenser_link" link2="collision_plane_link" reason="Adjacent" />
 
 
 
