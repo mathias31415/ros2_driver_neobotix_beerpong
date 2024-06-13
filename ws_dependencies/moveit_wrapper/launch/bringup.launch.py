@@ -204,7 +204,7 @@ def generate_launch_description():
                 "robot_ip": robot_ip, 
                 "description_package": description_package,
                 "description_file": description_file,
-                "tf_tf_prefix": tf_prefix,
+                "tf_prefix": tf_prefix,
                 "use_fake_hardware": use_fake_hardware,
                 "launch_rviz": "false",
             }.items(),
