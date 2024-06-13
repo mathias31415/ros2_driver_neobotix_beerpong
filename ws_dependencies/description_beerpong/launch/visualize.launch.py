@@ -12,7 +12,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "tf_prefix",
-            default_value='""',
+            default_value='ur_',
             description="tf_prefix for the links and joints in the robot cell",
         )
     )
