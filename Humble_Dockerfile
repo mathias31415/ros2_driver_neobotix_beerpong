@@ -88,9 +88,9 @@ USER $USER
 
 
 # autostart bringup with rviz
-CMD ["ros2", "launch", "moveit_wrapper", "bringup.launch.py", "launch_rviz:=true"]
+CMD ["ros2", "launch", "moveit_wrapper", "bringup.launch.py", "launch_rviz:=false"]
 #CMD ["/bin/bash"]
 
 
-
+# launch rviz not recommendet when running this container on the neobotix hardware pc, becaues cpu is to small
 
