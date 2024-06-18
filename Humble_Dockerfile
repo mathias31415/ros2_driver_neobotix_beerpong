@@ -88,7 +88,7 @@ USER $USER
 
 
 # autostart bringup with rviz
-CMD ["ros2", "launch", "moveit_wrapper", "bringup.launch.py", "launch_rviz:=false"]
+CMD ["ros2", "launch", "moveit_wrapper", "bringup.launch.py", "launch_rviz:=true"]
 #CMD ["/bin/bash"]
 
 
