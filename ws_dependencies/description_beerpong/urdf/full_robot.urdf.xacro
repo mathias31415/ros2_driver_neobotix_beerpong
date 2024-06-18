@@ -186,5 +186,22 @@
       </collision>
     </link>
 
+    <!-- collision plane  (UR and collision plane are fixed at world link)--> 
+    <joint name="ur_to_collision_plane" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <parent link="world"/>
+        <child link="collision_plane_link"/>
+    </joint> 
+
+    <link name="collision_plane_link">
+      <collision>
+        <origin xyz="0 0 -0.02" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="1.0" length="0.02"/>
+        </geometry>
+        <material name="$(arg tf_prefix)red" />
+      </collision>
+    </link>
+
  
 </robot>
