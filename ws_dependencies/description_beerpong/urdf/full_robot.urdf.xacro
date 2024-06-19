@@ -57,13 +57,44 @@
    <xacro:property name="initial_positions_file" default="$(arg initial_positions_file)"/>
 
    <!-- create link fixed to the "world" -->
-   <link name="world" />
+   <!--<link name="world" />-->
+
+    <!--Neobotix Macro importieren -->
+    <xacro:include filename="$(find neo_mpo_500-2)/robot_model/mpo_500_macro.urdf.xacro"/>
+    <xacro:neobotix/>
+
+    <!--<xacro:neobotix parent="world" origin_xyz="0 -0.205 -0.805" origin_rpy="0 0 1.57075"/>-->
+
+    <!--Neobotix cabin--> 
+    <joint name="neobotix_to_cabin" type="fixed">
+        <origin xyz="0.072 0 0.386" rpy="0 0 -1.57075" />
+        <parent link="base_link"/>
+        <child link="cabin_link"/>
+    </joint> 
+
+    <link name="cabin_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://description_beerpong/meshes/visual/cabin.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://description_beerpong/meshes/collision/cabin.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="$(arg tf_prefix)red" />
+      </collision>
+    </link>
 
      <!-- arm, ur base_link = world, neobotix under world z = 0 (only for collision avioidance)      parent="base_link"-->
+     <!-- neobotix base link is parent -->
    <xacro:ur_robot
      name="$(arg name)"
-     tf_prefix="$(arg tf_prefix)"
-     parent="world"
+     tf_prefix="$(arg tf_prefix)" 
+     parent="base_link"    
      joint_limits_parameters_file="$(arg joint_limit_params)"
      kinematics_parameters_file="$(arg kinematics_params)"
      physical_parameters_file="$(arg physical_params)"
@@ -97,13 +128,13 @@
      script_sender_port="$(arg script_sender_port)"
      trajectory_port="$(arg trajectory_port)"
      >
-     <origin xyz="0 0 0" rpy="0 0 0"/>         <!-- position robot in the world origin xyz="0.205 0 0.805" rpy="0 0 -1.57075"-->
+     <origin xyz="0.205 0 0.805" rpy="0 0 -1.57075"/>         <!-- position robot in the world origin xyz="0.205 0 0.805" rpy="0 0 -1.57075"-->
    </xacro:ur_robot>
 
 
-
-  <xacro:if value="$(arg sim_gazebo)">
-    <!-- Gazebo plugins -->
+  <!-- NEVER USED -->
+  <!-- <xacro:if value="$(arg sim_gazebo)">
+    < Gazebo plugins>
     <gazebo reference="world">
     </gazebo>
     <gazebo>
@@ -113,7 +144,7 @@
     </gazebo>
   </xacro:if>
   <xacro:if value="$(arg sim_ignition)">
-    <!-- Gazebo plugins -->
+    <!Gazebo plugins>
     <gazebo reference="world">
     </gazebo>
     <gazebo>
@@ -122,7 +153,7 @@
         <controller_manager_node_name>$(arg tf_prefix)controller_manager</controller_manager_node_name>
       </plugin>
     </gazebo>
-  </xacro:if>
+  </xacro:if> -->
 
 
 
@@ -131,41 +162,11 @@
     <xacro:gripper_camera tf_prefix="$(arg tf_prefix)" parent="$(arg tf_prefix)tool0" origin_xyz="0 0 0" origin_rpy="0 0 3.1415"/>
 
 
-
-    <!--Neobotix Macro importieren -->
-    <xacro:include filename="$(find neo_mpo_500-2)/robot_model/mpo_500_macro.urdf.xacro"/>
-    <xacro:neobotix parent="world" origin_xyz="0 -0.205 -0.805" origin_rpy="0 0 1.57075"/>
-
-    <!--Neobotix cabin--> 
-    <joint name="neobotix_to_cabin" type="fixed">
-        <origin xyz="0.072 0 0.386" rpy="0 0 -1.57075" />
-        <parent link="base_link"/>
-        <child link="cabin_link"/>
-    </joint> 
-
-    <link name="cabin_link">
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
-        <geometry>
-          <mesh filename="package://description_beerpong/meshes/visual/cabin.dae" scale="0.001 0.001 0.001"/>
-        </geometry>
-      </visual>
-    
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
-        <geometry>
-          <mesh filename="package://description_beerpong/meshes/collision/cabin.dae" scale="0.001 0.001 0.001"/>
-        </geometry>
-        <material name="$(arg tf_prefix)red" />
-      </collision>
-    </link>
-
-
     <!--Cup dispenser--> 
     <joint name="neobotix_to_cup_dispenser" type="fixed">
-        <!-- <origin xyz="-0.115 0.256 1.433" rpy="3.1415 0 3.1415" /> to nbtx base_link -->
-        <origin xyz="-0.256 -0.33 0.635" rpy="3.1415 0 -1.57075" />
-        <parent link="world"/>
+        <origin xyz="-0.115 0.256 1.433" rpy="3.1415 0 3.1415" />
+        <!-- <origin xyz="-0.256 -0.33 0.635" rpy="3.1415 0 -1.57075" />  world to cup dispenser -->
+        <parent link="base_link"/>
         <child link="cup_dispenser_link"/>
     </joint> 
 
@@ -190,25 +191,18 @@
     <!-- collision plane  (UR and collision plane are fixed at world link)--> 
     <joint name="ur_to_collision_plane" type="fixed">
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
-        <parent link="world"/>
+        <parent link="base_link"/>
         <child link="collision_plane_link"/>
     </joint> 
 
     <link name="collision_plane_link">
       <collision>
-        <origin xyz="0 0 -0.02" rpy="0 0 0" />
+        <origin xyz="0 0 0.803" rpy="0 0 0" />
         <geometry>
           <cylinder radius="1.0" length="0.02"/>
         </geometry>
         <material name="$(arg tf_prefix)red" />
       </collision>
-      <visual>
-        <origin xyz="0 0 -0.02" rpy="0 0 0" />
-        <geometry>
-          <cylinder radius="1.0" length="0.02"/>
-        </geometry>
-        <material name="$(arg tf_prefix)grey" />
-      </visual>
     </link>
 
  
