@@ -44,7 +44,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
 
-       # Initialize Arguments
+    # Initialize Arguments
     ur_type = LaunchConfiguration("ur_type")
 
     # General arguments

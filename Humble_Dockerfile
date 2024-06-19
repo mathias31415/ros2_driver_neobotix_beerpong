@@ -20,7 +20,7 @@ RUN groupadd -g $GID $USER \
 USER root
 RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-xacro
 RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-joint-state-publisher-gui
-RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-ur
+#RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-ur --> use our forked repo to do more customization (delete robot_state_publisher)
 RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-realsense2-description
 USER ${USER}
 
