@@ -27,7 +27,7 @@
       <joint name="${tf_prefix}wrist_2_joint" value="0" />
       <joint name="${tf_prefix}wrist_3_joint" value="0" />
     </group_state>
-    <group_state name="${tf_prefix}up" group="${tf_prefix}${name}_manipulator">
+    <group_state name="${tf_prefix}up" group="${name}_manipulator">
       <joint name="${tf_prefix}elbow_joint" value="0" />
       <joint name="${tf_prefix}shoulder_lift_joint" value="-1.5707" />
       <joint name="${tf_prefix}shoulder_pan_joint" value="0" />
@@ -35,7 +35,7 @@
       <joint name="${tf_prefix}wrist_2_joint" value="0" />
       <joint name="${tf_prefix}wrist_3_joint" value="0" />
     </group_state>
-    <group_state name="${tf_prefix}test_configuration" group="${tf_prefix}${name}_manipulator">
+    <group_state name="${tf_prefix}test_configuration" group="${name}_manipulator">
       <joint name="${tf_prefix}elbow_joint" value="1.4" />
       <joint name="${tf_prefix}shoulder_lift_joint" value="-1.62" />
       <joint name="${tf_prefix}shoulder_pan_joint" value="1.54" />
@@ -76,8 +76,8 @@
     <disable_collisions link1="${tf_prefix}camera_mount_link" link2="${tf_prefix}gripper_link" reason="Adjacent" />
     <disable_collisions link1="${tf_prefix}camera_mount_link" link2="camera_link" reason="Never" />
 
-    <!-- disable cabin and cup_dispeser collisions
-    <disable_collisions link1="cabin_link" link2="cup_dispenser_link" reason="Adjacent" /> -->
+    <!-- disable cabin and cup_dispeser collisions -->
+    <disable_collisions link1="cabin_link" link2="cup_dispenser_link" reason="Adjacent" />
    
 
     <!--disable collisions with collision plane-->

@@ -2,13 +2,13 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
 
-  <xacro:macro name="neobotix" params="parent origin_xyz origin_rpy"> 
+  <xacro:macro name="neobotix"> <!-- params="parent origin_xyz origin_rpy" --> 
       
-      <joint name="neobotix_to_parent" type="fixed">
+      <!-- <joint name="neobotix_to_parent" type="fixed">
           <parent link="${parent}"/>
           <child link="base_link"/>
           <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
-      </joint>
+      </joint> -->
 
       <!-- Base Macro-->
       <link name="base_link"/>
