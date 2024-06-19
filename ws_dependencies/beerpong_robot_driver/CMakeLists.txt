@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(ur_robot_driver)
+project(beerpong_robot_driver)
 
 # Default to off as this only works in environments where a new docker container can be started with the appropriate networking, which
 # might not be possible e.g. inside the buildfarm
