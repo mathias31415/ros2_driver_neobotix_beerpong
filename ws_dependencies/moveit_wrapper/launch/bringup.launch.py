@@ -195,7 +195,7 @@ def generate_launch_description():
     ##                                  launch driver from ur package                               ##
     ##################################################################################################
 
-    driver_package = "ur_robot_driver"
+    driver_package = "beerpong_robot_driver"
     driver_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [PathJoinSubstitution([FindPackageShare(driver_package), 'launch']), "/ur_control.launch.py"]),
