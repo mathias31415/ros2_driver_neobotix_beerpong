@@ -133,11 +133,11 @@
 
 
     <!--Neobotix Macro importieren -->
-    <!-- <xacro:include filename="$(find neo_mpo_500-2)/robot_model/mpo_500_macro.urdf.xacro"/>
-    <xacro:neobotix parent="world" origin_xyz="0 -0.205 -0.805" origin_rpy="0 0 1.57075"/> -->
+    <xacro:include filename="$(find neo_mpo_500-2)/robot_model/mpo_500_macro.urdf.xacro"/>
+    <xacro:neobotix parent="world" origin_xyz="0 -0.205 -0.805" origin_rpy="0 0 1.57075"/>
 
     <!--Neobotix cabin--> 
-    <!-- <joint name="neobotix_to_cabin" type="fixed">
+    <joint name="neobotix_to_cabin" type="fixed">
         <origin xyz="0.072 0 0.386" rpy="0 0 -1.57075" />
         <parent link="base_link"/>
         <child link="cabin_link"/>
@@ -158,12 +158,12 @@
         </geometry>
         <material name="$(arg tf_prefix)red" />
       </collision>
-    </link> -->
+    </link>
 
 
     <!--Cup dispenser--> 
     <joint name="neobotix_to_cup_dispenser" type="fixed">
-        <!-- <origin xyz="-0.115 0.256 1.433" rpy="3.1415 0 3.1415" /> -->
+        <!-- <origin xyz="-0.115 0.256 1.433" rpy="3.1415 0 3.1415" /> to nbtx base_link -->
         <origin xyz="-0.256 -0.33 0.635" rpy="3.1415 0 -1.57075" />
         <parent link="world"/>
         <child link="cup_dispenser_link"/>
