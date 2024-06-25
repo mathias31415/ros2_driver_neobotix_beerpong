@@ -54,27 +54,11 @@ namespace moveit_wrapper
         _move_group.reset(new moveit::planning_interface::MoveGroupInterface(shared_from_this(), _planning_group));
 
         // set goal planning time
-        _move_group->setPlanningTime(2.0);
+        _move_group->setPlanningTime(1.0);
 
-        //set pose refernce frame
-         _move_group->setPoseReferenceFrame("world");
+        // set refernce frame for planning to ur_base_link
+        _move_group->setPoseReferenceFrame("ur_base_link");
 
-        // Set Bounding Box for the workspace 
-        // double minx = -1.5;
-        // double miny = -1.5;
-        // double minz = 0.0;
-        // double maxx = 1.5;
-        // double maxy = 1.5;
-        // double maxz = 2.0;
-
-        double minx = -10.0;
-        double miny = -10.0;
-        double minz = -10.0;
-        double maxx = 10.0;
-        double maxy = 10.0;
-        double maxz = 10.0;
-
-        _move_group->setWorkspace(minx, miny, minz, maxx, maxy, maxz);
 
         _i_move_group_initialized = true;
 
@@ -109,10 +93,13 @@ namespace moveit_wrapper
             _move_group->stop();
             _move_group->clearPoseTargets();
             _move_group->setStartStateToCurrentState();
-            //_move_group->setPoseReferenceFrame("world");
 
             std::string refFrame = _move_group->getPoseReferenceFrame();
-            RCLCPP_WARN(rclcpp::get_logger("moveit_wrapper"), "Planning Pose Reference Frame: %s", refFrame.c_str());
+            RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "Planning Pose Reference Frame: %s", refFrame.c_str());
+
+            std::string tcpFrame = _move_group->getEndEffectorLink();
+            RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "Planning TCP Frame: %s", tcpFrame.c_str());
+            
 
 
             //https://github.com/moveit/moveit2/blob/main/moveit_ros/visualization/motion_planning_rviz_plugin/src/motion_planning_frame_planning.cpp
@@ -124,8 +111,8 @@ namespace moveit_wrapper
 
             moveit_msgs::msg::RobotTrajectory trajectory;
             const double jump_threshold = 0.0;
-            const double eef_step = 0.01;        
-            bool avoid_collisions = true;           
+            const double eef_step = 0.005;        
+            bool avoid_collisions = true;  
             double fraction = _move_group->computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory ,avoid_collisions);
 
             rclcpp::Time start = rclcpp::Clock().now();

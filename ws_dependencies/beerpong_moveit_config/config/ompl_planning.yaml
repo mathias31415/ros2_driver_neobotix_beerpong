@@ -56,7 +56,7 @@ planner_configs:
 
 
 ur_manipulator:
-  default_planner_config: RRTstarkConfigDefault
+  default_planner_config: RRTConnectkConfigDefault
   planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault

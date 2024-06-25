@@ -59,6 +59,8 @@
 
     <disable_collisions link1="cabin_link" link2="${tf_prefix}base_link_inertia" reason="Adjacent" />
 
+    <disable_collisions link1="collision_plane_link" link2="${tf_prefix}base_link_inertia" reason="Adjacent" />
+
     <disable_collisions link1="${tf_prefix}base_link" link2="${tf_prefix}base_link_inertia" reason="Adjacent" />
     <disable_collisions link1="${tf_prefix}base_link_inertia" link2="${tf_prefix}shoulder_link" reason="Adjacent" />
     <disable_collisions link1="${tf_prefix}tool0" link2="${tf_prefix}wrist_1_link" reason="Never" />

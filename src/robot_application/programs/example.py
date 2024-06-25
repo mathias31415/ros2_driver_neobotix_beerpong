@@ -8,8 +8,6 @@ def movement_test(robot):
     robot.setVelocity(0.1)
     print("set velocity  to 0.1")
 
-    #define a home position (when want to use default [0.0, 0.0, 0.0, 0.0, 0.0, 0.0] you don't need this definition) -> floats required
-    #robot.home_position = [-0.925, -1.686, -2.074, - 1.604, -0.010, -1.682]
 
     robot.home_position = [-np.pi/2, -np.pi/6,-np.pi/2, 7*np.pi/6, np.pi/2, 0.0]
     print("set home position successfully")

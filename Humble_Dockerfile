@@ -62,6 +62,7 @@ COPY ./ws_dependencies /home/$USER/ws_dependencies
 
 USER root
 RUN chown -R "$USER":"$USER" /home/"$USER"/ws_dependencies/py_dependencies
+RUN apt-get update && apt-get install -y libnlopt*
 USER $USER
 
 RUN cd /home/"$USER"/ws_dependencies/py_dependencies/manipulation_tasks && pip install .
@@ -85,7 +86,6 @@ RUN cd /home/$USER/ros2_ws && \
 USER root
 RUN sed -i 's|exec "\$@"|source "/home/'"${USER}"'/ros2_ws/install/setup.bash"\n&|' /ros_entrypoint.sh
 USER $USER
-
 
 # autostart bringup with rviz
 CMD ["ros2", "launch", "moveit_wrapper", "bringup.launch.py", "launch_rviz:=true"]
