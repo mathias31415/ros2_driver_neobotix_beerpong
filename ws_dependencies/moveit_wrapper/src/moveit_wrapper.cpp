@@ -53,7 +53,31 @@ namespace moveit_wrapper
         RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), PLANNING_GROUP.c_str());
         _move_group.reset(new moveit::planning_interface::MoveGroupInterface(shared_from_this(), _planning_group));
 
+        // set goal planning time
+        _move_group->setPlanningTime(2.0);
+
+        //set pose refernce frame
+         _move_group->setPoseReferenceFrame("world");
+
+        // Set Bounding Box for the workspace 
+        // double minx = -1.5;
+        // double miny = -1.5;
+        // double minz = 0.0;
+        // double maxx = 1.5;
+        // double maxy = 1.5;
+        // double maxz = 2.0;
+
+        double minx = -10.0;
+        double miny = -10.0;
+        double minz = -10.0;
+        double maxx = 10.0;
+        double maxy = 10.0;
+        double maxz = 10.0;
+
+        _move_group->setWorkspace(minx, miny, minz, maxx, maxy, maxz);
+
         _i_move_group_initialized = true;
+
         rclcpp::Rate loop_rate(1000);
         loop_rate.sleep();
         RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "Ready to receive commands.");
@@ -70,9 +94,6 @@ namespace moveit_wrapper
         _move_group->stop();
         _move_group->clearPoseTargets();
         init_move_group();
-
-        // set goal planning time
-        _move_group->setPlanningTime(2.0);
         
         response->success = true;
         RCLCPP_INFO(rclcpp::get_logger("moveit_wrapper"), "reset_planning_group callback executed.");
@@ -88,6 +109,11 @@ namespace moveit_wrapper
             _move_group->stop();
             _move_group->clearPoseTargets();
             _move_group->setStartStateToCurrentState();
+            //_move_group->setPoseReferenceFrame("world");
+
+            std::string refFrame = _move_group->getPoseReferenceFrame();
+            RCLCPP_WARN(rclcpp::get_logger("moveit_wrapper"), "Planning Pose Reference Frame: %s", refFrame.c_str());
+
 
             //https://github.com/moveit/moveit2/blob/main/moveit_ros/visualization/motion_planning_rviz_plugin/src/motion_planning_frame_planning.cpp
 
@@ -98,8 +124,9 @@ namespace moveit_wrapper
 
             moveit_msgs::msg::RobotTrajectory trajectory;
             const double jump_threshold = 0.0;
-            const double eef_step = 0.01;                   
-            double fraction = _move_group->computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+            const double eef_step = 0.01;        
+            bool avoid_collisions = true;           
+            double fraction = _move_group->computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory ,avoid_collisions);
 
             rclcpp::Time start = rclcpp::Clock().now();
 
